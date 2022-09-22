@@ -1,0 +1,6 @@
+usr/include/
+usr/lib/*/*.so
+usr/lib/*/installed-tests
+usr/lib/*/pkgconfig/
+usr/share/gir-1.0/
+usr/share/installed-tests/json-glib-1.0 usr/lib/${DEB_HOST_MULTIARCH}/installed-tests

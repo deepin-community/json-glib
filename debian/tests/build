@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+set -u
+exec 2>&1
+set -x
+
+cd "${AUTOPKGTEST_TMP}"
+
+if [ -n "${DEB_HOST_GNU_TYPE:-}" ]; then
+    CROSS_COMPILE="$DEB_HOST_GNU_TYPE-"
+else
+    CROSS_COMPILE=
+fi
+
+cat > trivial.c <<EOF
+#include <errno.h>
+#include <json-glib/json-glib.h>
+
+int main (void)
+{
+    json_array_get_type ();
+    return 0;
+}
+EOF
+
+# Deliberately word-splitting, that's how pkg-config works:
+# shellcheck disable=SC2046
+"${CROSS_COMPILE}gcc" -o trivial trivial.c $("${CROSS_COMPILE}pkg-config" --cflags --libs json-glib-1.0)
+test -x trivial
+./trivial

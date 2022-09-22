@@ -1,0 +1,8 @@
+Tests: build
+Restrictions: superficial
+Depends: build-essential,
+         libjson-glib-dev
+
+Tests: installed-tests
+Depends: gnome-desktop-testing,
+         libjson-glib-dev

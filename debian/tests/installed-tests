@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -eu
+
+found=
+prefix=json-glib-1.0/
+
+for insttests in /usr/lib/*/installed-tests; do
+    dir="${insttests%/installed-tests}"
+
+    if [ -z "$(ginsttest-runner --dir "$dir" -l "$prefix")" ]; then
+        continue
+    fi
+
+    found=yes
+    ginsttest-runner \
+        --dir "$dir" \
+        ${AUTOPKGTEST_ARTIFACTS:+--report-directory="$AUTOPKGTEST_ARTIFACTS"} \
+        --tap \
+        "$prefix"
+done
+
+if [ -z "$found" ]; then
+    echo "Error: no installed-tests directory found" >&2
+    exit 1
+fi

@@ -1,0 +1,428 @@
+json-glib (1.6.6-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #992665)
+  * Drop patch: applied in new release
+  * Build-Depend on dh-sequence-gir and dh-sequence-gnome
+  * debian/control.in: Bump minimum meson to 0.55.3
+  * debian/rules: Drop unneeded -Wl,--as-needed
+  * Build-Depend on python3-jinja2, python3-toml, python3-typogrify
+    for gi-docgen vendored copy. See 987000 for vendored copy explanation.
+  * Drop debian/libjson-glib-doc.links and use default doc install location
+    which is more reasonable than what gtk-doc was doing
+
+ -- Jeremy Bicha <jbicha@debian.org>  Mon, 23 Aug 2021 19:07:52 -0400
+
+json-glib (1.6.2-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+    - Make the build more reproducible
+    - Fix parsing of UTF-16 surrogate pairs (Closes: #772585)
+    - Skip UTF-8 byte order mark if present
+    - Translation updates
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 17 Feb 2021 10:04:14 +0000
+
+json-glib (1.6.0-3) unstable; urgency=medium
+
+  * Team upload
+
+  [ Helmut Grohne ]
+  * Drop unused libxml2-utils from Build-Depends (Closes: #981255)
+
+  [ Simon McVittie ]
+  * Add Lintian override for #970275
+  * Standards-Version: 4.5.1 (no changes required)
+
+ -- Simon McVittie <smcv@debian.org>  Sun, 31 Jan 2021 16:54:36 +0000
+
+json-glib (1.6.0-2) unstable; urgency=medium
+
+  * debian/control.in: Add libglib2.0-doc to the BDI and mark -doc package
+    with Build-Profiles: <!nodoc>
+  * d/p/fix-ftbfs-non-linux.patch: Pass extra parameters to the linker, that
+    should fix the FTBFS on non-linux architectures
+
+ -- Laurent Bigonville <bigon@debian.org>  Fri, 11 Dec 2020 09:40:52 +0100
+
+json-glib (1.6.0-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+  * d/watch: Only watch for stable versions again
+  * Release to unstable
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 14 Sep 2020 09:52:12 +0100
+
+json-glib (1.5.2-1) experimental; urgency=medium
+
+  * Team upload
+  * d/watch: Watch for development versions
+  * New upstream release
+    - The library now has versioned symbols, avoiding collisions with
+      other JSON libraries. (Closes: #966399)
+    - Fix error detection when converting integers to GVariant
+      (LP: #1871023)
+  * d/libjson-glib-1.0-0.symbols: Update
+  * Update dependencies as per meson.build
+  * Update Meson parameter name for gtk-doc documentation
+  * Bump dependency for all symbols to 1.5.2 due to introduction of
+    versioned symbols
+  * d/tests/build: Remove support for ancient autopkgtest versions.
+    AUTOPKGTEST_TMP is now required to be set, and we do not fall back
+    to the deprecated ADTTMP.
+  * d/tests/build: Silence a shellcheck warning
+  * d/tests/build: Use correct compiler for proposed autopkgtest
+    cross-architecture testing support (Closes: #946490)
+  * d/tests/build: Mark as superficial
+  * d/libjson-glib-1.0-0.symbols: Add Build-Depends-Package.
+    This lets Build-Depends: libjson-glib-dev (>= x.y) translate into a
+    runtime dependency on at least libjson-glib-1.0-0 (>= x.y), even if no
+    new symbols are used.
+  * Standards-Version: 4.5.0 (no changes required)
+  * Normalize order of dependency lists (wrap-and-sort -a)
+  * Normalize order of installed file lists (wrap-and-sort -a)
+  * Remove migration path from legacy -dbg package older than oldstable
+  * Add installed-tests to -dev package, and run them from autopkgtest.
+    Next time there is an ABI break we could split these into a
+    libjson-glib-tests package, but it doesn't seem worth going through
+    NEW for that.
+    - Install tests and metadata in a multiarch directory. Otherwise we
+      won't be multiarch-friendly.
+  * Use debhelper compat level 13.
+    - Switch from dh_missing --list-missing to the default --fail-missing.
+    - Keep the ${libexecdir} set to /usr/lib/MULTIARCH, to avoid the
+      installed-tests in the -dev package becoming non-multiarch-friendly.
+  * d/shlibs.local: Generate lockstep dependencies between binary packages.
+    This avoids various possible situations with broken partial upgrades.
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 07 Sep 2020 12:08:44 +0100
+
+json-glib (1.4.4-2) unstable; urgency=medium
+
+  * Add -Wl,-O1 to our LDFLAGS
+  * Bump Standards-Version to 4.3.0
+
+ -- Jeremy Bicha <jbicha@debian.org>  Thu, 27 Dec 2018 10:15:42 -0500
+
+json-glib (1.4.4-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+  * Update debian/gbp.conf
+  * Drop patches applied in new release:
+    - 0001-Add-float-comparison-utility-macros-for-tests.patch
+    - 0002-Use-fuzzy-comparison-for-floating-point-values.patch
+    - Make-the-build-reproducible.patch
+  * debian/rules:
+    - Build with -Dman=true. Starting from 1.4.4 depending on xsltproc is no
+      longer enough to build the man pages.
+  * debian/control:
+    - Bump Standards-Version to 4.2.1
+    - Set Rules-Requires-Root to no
+
+ -- Andrea Azzarone <andrea.azzarone@canonical.com>  Wed, 10 Oct 2018 03:54:00 +0000
+
+json-glib (1.4.2-4) unstable; urgency=medium
+
+  * Team upload
+
+  [ Jeremy Bicha ]
+  * Update Vcs fields for migration to https://salsa.debian.org/
+  * Bump debhelper compat to 11
+
+  [ Simon McVittie ]
+  * d/p/Make-the-build-reproducible.patch:
+    Apply patch from Chris Lamb to make json-enum-types.h reproducible
+    (Closes: #882383) and multi-arch co-installable (Closes: #897341)
+  * d/tests: Add a trivial compile/link/run autopkgtest
+  * Bump Standards-Version to 4.1.4
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 01 May 2018 16:18:06 +0100
+
+json-glib (1.4.2-3) unstable; urgency=medium
+
+  * Update Vcs fields for conversion to git
+  * Add debian/gbp.conf
+  * Bump Standards-Version to 4.1.2
+
+ -- Jeremy Bicha <jbicha@debian.org>  Fri, 15 Dec 2017 18:28:10 -0500
+
+json-glib (1.4.2-2) unstable; urgency=medium
+
+  * Use fuzzy comparisons for floating point values. (Closes: #880702)
+    Patches cherry-picked from upstream Git.
+
+ -- Michael Biebl <biebl@debian.org>  Sat, 04 Nov 2017 19:19:24 +0100
+
+json-glib (1.4.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * Switch to meson build system
+  * Update symbols file for libjson-glib-1.0-0.symbols with new additions.
+    The json_serialize_pspec and json_deserialize_pspec symbols have been
+    dropped, but those were privat.
+  * Use dh_missing to list uninstalled files
+  * Use Files-Excluded in debian/copyright to exclude non-free RFCs
+  * Bump Standards-Version to 4.1.1
+
+ -- Michael Biebl <biebl@debian.org>  Fri, 03 Nov 2017 22:34:21 +0100
+
+json-glib (1.2.8-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sun, 02 Jul 2017 08:37:21 +0200
+
+json-glib (1.2.6-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Re-add gnome-get-source.mk include.
+  * Drop private symbols for the custom marshaller. Upstream now uses the
+    generic one provided by GLib.
+
+ -- Michael Biebl <biebl@debian.org>  Thu, 16 Mar 2017 20:01:26 +0100
+
+json-glib (1.2.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Convert from cdbs to dh.
+  * Bump Standards-Version to 3.9.8.
+  * Drop dbg package now that we have automatic dbgsym packages.
+  * Ensure proper upgrade from libjson-glib-1.0-0-dbg to new dbgsym packages
+    by using dh_strip --dbgsym-migration. Bump Build-Depends on debhelper
+    accordingly.
+
+ -- Michael Biebl <biebl@debian.org>  Sun, 07 Aug 2016 15:25:15 +0200
+
+json-glib (1.2.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 3.9.7
+  * Drop debian/patches/0001-tests-builder-Don-t-duplicate-test-names.patch
+    - merged upstream.
+  * Updated debian/libjson-glib-1.0-0.symbols with many additions.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 24 Mar 2016 16:26:57 +0100
+
+json-glib (1.0.4-2) unstable; urgency=medium
+
+  [ Michael Biebl ]
+  * Drop obsolete Conflicts/Replaces.
+
+  [ Iain Lane ]
+  * debian/patches/0001-tests-builder-Don-t-duplicate-test-names.patch:
+    Cherry-pick. Don't duplicate test names, so as not to fail to build with
+    glib 2.46.
+  * debian/rules: Run testsuite verbosely
+
+ -- Iain Lane <laney@debian.org>  Fri, 02 Oct 2015 12:18:23 +0100
+
+json-glib (1.0.4-1) unstable; urgency=medium
+
+  * New upstream relese.
+  * Wrap dependencies.
+  * Install typelib files into multiarch paths.
+  * Mark gir and dev packages as Multi-Arch: same and the doc package as
+    Multi-Arch: foreign.
+  * Update Homepage: URL.
+  * Update debian/copyright using the machine-readable copyright format 1.0.
+  * Bump Standards-Version to 3.9.6.
+  * Install upstream provided man pages via .install file.
+  * Mark private symbols for the marshaller as (optional).
+
+ -- Michael Biebl <biebl@debian.org>  Sat, 23 May 2015 15:58:02 +0200
+
+json-glib (1.0.2-1) unstable; urgency=medium
+
+  [ Andreas Henriksson ]
+  * Drop sledge-hammer and bump dh compat to 9
+    - This fixes the -dbg vs multiarch issues
+    Thanks to Julien Cristau for the hint.
+  * New upstream release.
+
+  [ Colin Watson ]
+  * use dh-autoreconf for better new-port coverage (Closes: #732301)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sun, 13 Jul 2014 15:50:01 +0200
+
+json-glib (1.0.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump glib build-dependency to 2.37.6 according to configure.ac
+  * Switch DEB_MAKE_CHECK_TARGET from "test" to "check".
+    - make test doesn't exist (anymore?).
+  * Build-depend on libxml2-utils and xsltproc for manpage generation.
+  * Bump Standards-Version to 3.9.5
+  * Bump gtk-doc-tools build-dependency to >= 1.20 according to configure.ac
+  * Update debian/libjson-glib-1.0-0.symbols with added symbols.
+  * Add json-glib-tools package.
+  * Use sledge-hammer on -dbg package because of multiarch.
+    - we don't need debug info for the trivial binaries in -tools.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 25 Mar 2014 15:42:46 +0100
+
+json-glib (0.16.2-1) unstable; urgency=low
+
+  [ Jeremy Bicha ]
+  * Update homepage
+
+  [ Andreas Henriksson ]
+  * New upstream release
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 24 Sep 2013 18:43:37 +0200
+
+json-glib (0.16.0-1) unstable; urgency=low
+
+  [ Michael Biebl ]
+  * Change section of gir1.2-json-1.0 to introspection.
+
+  [ Josselin Mouette ]
+  * Update repository URL.
+
+  [ Laurent Bigonville ]
+  * New upstream release
+    - Bump libglib2.0-dev build-dependency to 2.34.0
+    - debian/libjson-glib-1.0-0.symbols: Adjust .symbols file, the dropped
+      symbols were not part of the public API
+  * debian/control.in:
+    - Bump Standards-Version to 3.9.4 (no further changes)
+    - Use canonical URL's for VCS fields
+  * debian/rules: Use DEB_LDFLAGS_MAINT_APPEND instead of LDFLAGS and include
+    buildflags.mk to avoid overriding hardening flags
+  * Add libjson-glib-1.0-common package: Upstream is now shipping translations
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 18 Jun 2013 18:43:18 +0200
+
+json-glib (0.14.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Add multiarch support
+  * debian/watch: Switch to .xz tarballs
+
+ -- Laurent Bigonville <bigon@debian.org>  Thu, 17 Nov 2011 12:14:08 +0100
+
+json-glib (0.14.0-1) unstable; urgency=low
+
+  * New upstream release: Translation updates only.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 19 Sep 2011 17:21:39 +0200
+
+json-glib (0.13.90-1) unstable; urgency=low
+
+  * New upstream release.
+  * Drop 0001-Fix-GVariant-creation-on-some-architectures-bug-6504.patch:
+    Applied upstream.
+
+ -- Martin Pitt <mpitt@debian.org>  Mon, 12 Sep 2011 09:08:07 +0200
+
+json-glib (0.13.4-2) unstable; urgency=low
+
+  * Rename gir1.2-json-glib-1.0 package to gir1.2-json-1.0 to follow policy
+  * d/p/0001-Fix-GVariant-creation-on-some-architectures-bug-6504.patch:
+    Fix FTBFS on some architectures (Closes: #632823)
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 06 Jul 2011 15:46:43 +0200
+
+json-glib (0.13.4-1) unstable; urgency=low
+
+  * New upstream release. (Thanks to Ted Gould <ted@ubuntu.com>)
+    - Fixes for removal of G_CONST_RETURN
+  * debian/libjson-glib-1.0-0.symbols: Update for 0.13.4
+  * debian/watch: Switch to .bz2 tarballs
+
+ -- Laurent Bigonville <bigon@debian.org>  Tue, 21 Jun 2011 16:29:02 +0200
+
+json-glib (0.13.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Put under Debian GNOME Maintainers maintenance
+  * debian/control.in:
+    - Fix gir1.2-json-glib-1.0 short descrition (Closes: #589085)
+    - Drop duplicate Sections to please lintian
+    - Make libjson-glib-dev package depends against gir1.2-json-glib-1.0
+    - Bump cdbs and debhelper build-dependencies
+    - Bump Standards-Version to 3.9.2 (no further changes)
+    - Add Homepage and Vcs- fields
+  * debian/rules:
+    - Add include uploaders.mk and gnome-get-source.mk
+    - Rely on cdbs to call dh_girepository
+    - Run regression tests during build (Closes: #583554)
+    - Bump shlibs file automatically since we are using .symbols file
+  * Switch to dpkg-source 3.0 (quilt) format
+  * debian/libjson-glib-1.0-0.symbols: Add .symbols file (Closes: #611184)
+  * debian/watch: Add watch file
+  * debian/copyright: Update download URL (Closes: #589087)
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 18 May 2011 15:01:29 +0200
+
+json-glib (0.12.0-3) unstable; urgency=low
+
+  * Upload to unstable
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Wed, 23 Mar 2011 22:20:28 +0000
+
+json-glib (0.12.0-2) experimental; urgency=low
+
+  [ Emilio Pozuelo Monfort ]
+  * Update to the new gir policy:
+    - Rename gir1.0-json-glib-1.0 to gir1.2-json-glib-1.0.
+    - Bump the gobject-introspection build dependency.
+    - Build depend on gir1.2 packages.
+
+  [ Sjoerd Simons ]
+  * Also add Replaces for gir1.0-json-glib-1.0
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sun, 12 Dec 2010 16:12:34 +0000
+
+json-glib (0.12.0-1) experimental; urgency=low
+
+  * New upstream release
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Sat, 27 Nov 2010 21:08:06 +0000
+
+json-glib (0.10.2-2) unstable; urgency=low
+
+  * Enable GObject introspection
+
+ -- Rob Bradford <robster@debian.org>  Tue, 16 Mar 2010 06:07:32 +0000
+
+json-glib (0.10.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Rob Bradford <robster@debian.org>  Mon, 15 Mar 2010 15:44:13 +0000
+
+json-glib (0.8.0-1) unstable; urgency=low
+
+  * New upstream release (Closes: #547673)
+  * Fix documentation symlink (Closes: #532712)
+
+ -- Ross Burton <ross@debian.org>  Mon, 28 Sep 2009 13:20:19 +0100
+
+json-glib (0.6.2-3) unstable; urgency=low
+
+  * Fix the name of the library .install file to match that of the library.
+    (closes: #486574)
+
+ -- Rob Bradford <robster@debian.org>  Tue, 17 Jun 2008 17:49:36 +0100
+
+json-glib (0.6.2-2) unstable; urgency=low
+
+  * Change binary package name for main library binary package to more closely
+    represent soname.
+
+ -- Rob Bradford <robster@debian.org>  Mon, 09 Jun 2008 11:56:12 +0100
+
+json-glib (0.6.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Include note in debian/copyright about GFDL licensed docs.
+
+ -- Rob Bradford <robster@debian.org>  Fri, 23 May 2008 14:06:09 +0100
+
+json-glib (0.6.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Emmanuele Bassi <ebassi@openedhand.com>  Thu, 01 May 2008 15:22:36 +0100
