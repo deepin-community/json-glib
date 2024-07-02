@@ -1,11 +1,13 @@
-project('json-glib', 'c', version: '1.6.6',
-        license: 'LGPLv2.1+',
-        default_options: [
-          'warning_level=1',
-          'buildtype=debugoptimized',
-          'c_std=c99',
-        ],
-        meson_version: '>= 0.55.3')
+project('json-glib', 'c',
+  version: '1.8.0',
+  license: 'LGPL-2.1-or-later',
+  default_options: [
+    'warning_level=2',
+    'buildtype=debugoptimized',
+    'c_std=gnu99',
+  ],
+  meson_version: '>= 0.62.0',
+)
 
 # Versioning
 json_version = meson.project_version()
@@ -152,7 +154,12 @@ python3 = import('python').find_installation()
 gen_installed_test = files('build-aux/gen-installed-test.py')
 
 subdir('json-glib')
-subdir('po')
+
+# xgettext is optional (on Windows for instance)
+if find_program('xgettext', required : get_option('nls')).found()
+  subdir('po')
+endif
+
 subdir('doc')
 
 if not meson.is_subproject()
