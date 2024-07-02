@@ -2,8 +2,6 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: JSON-GLib
 Upstream-Contact: Emmanuele Bassi <ebassi@openedhand.com>
 Source: https://download.gnome.org/sources/json-glib/
-Files-Excluded: doc/draft-zyp-json-schema-02.txt
-                doc/rfc4627.txt
 
 Files: *
 Copyright: 2007, 2008  OpenedHand Ltd.

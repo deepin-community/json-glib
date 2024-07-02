@@ -1,3 +1,30 @@
+json-glib (1.8.0-2) unstable; urgency=medium
+
+  * Team upload
+  * d/control: Don't generate from d/control.in
+  * d/control: Add ${gir:Depends}, ${gir:Provides} to -dev package
+    (Helps: #1030223)
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 14 Nov 2023 10:19:21 +0000
+
+json-glib (1.8.0-1) unstable; urgency=medium
+
+  [ Jeremy Bícha ]
+  * New upstream release
+  * Build-Depend on gi-docgen
+  * Set auto_features=enabled
+  * debian/copyright: simplify since gi-docgen subproject is no longer bundled
+  * debian/libjson-glib-1.0-0.symbols: Add new symbol
+
+  [ Simon McVittie ]
+  * d/clean: Ensure __pycache__ directories are cleaned up (Closes: #1047495)
+
+  [ Debian Janitor ]
+  * Add debian/upstream/metadata
+  * Update standards version to 4.6.2, no changes needed
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Mon, 18 Sep 2023 09:50:30 -0400
+
 json-glib (1.6.6-1) unstable; urgency=medium
 
   * New upstream release (Closes: #992665)
