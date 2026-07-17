@@ -1,5 +1,12 @@
-install_header_subdir = join_paths(json_api_name, 'json-glib')
-install_header_dir = join_paths(json_includedir, install_header_subdir)
+# SPDX-FileCopyrightText: 2016 Thibault Saunier
+# SPDX-FileCopyrightText: 2017 Emmanuele Bassi
+# SPDX-FileCopyrightText: 2018 Collabora Ltd
+# SPDX-FileCopyrightText: 2020 Collabora Ltd
+#
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
+install_header_subdir = json_api_name / 'json-glib'
+install_header_dir = json_includedir / install_header_subdir
 
 configure_file(output: 'config.h', configuration: cdata)
 
@@ -16,11 +23,12 @@ source_h = [
   'json-version-macros.h'
 ]
 
-json_glib_enums = gnome.mkenums(
+json_glib_enums = gnome.mkenums_simple(
   'json-enum-types',
   sources: source_h,
-  h_template: 'json-enum-types.h.in',
-  c_template: 'json-enum-types.c.in',
+  header_prefix: '#include <json-glib/json-version-macros.h>',
+  body_prefix: '#include "config.h"',
+  decorator: 'JSON_AVAILABLE_IN_1_0',
   install_header: true,
   install_dir: install_header_dir,
 )
@@ -78,6 +86,7 @@ json_lib = library(
   dependencies: [gio_dep],
   c_args: json_c_args + common_cflags,
   link_args: common_ldflags,
+  gnu_symbol_visibility: 'hidden',
   darwin_versions: darwin_versions,
   install: true,
 )
@@ -93,7 +102,6 @@ pkgg.generate(
   requires: 'gio-2.0',
 )
 
-gir = find_program('g-ir-scanner', required : get_option('introspection'))
 if gir.found()
   gir_args = [
     '--quiet',
@@ -113,7 +121,7 @@ if gir.found()
     header: 'json-glib/json-glib.h',
     install: true,
     extra_args: gir_args,
-    fatal_warnings: true,
+    fatal_warnings: get_option('werror'),
   )
 else
   json_glib_gir = []

@@ -1,0 +1,9 @@
+Document: json-glib-1.0
+Title: json-glib Reference Manual
+Author: Emmanuele Bassi
+Abstract: JSON parser and generator
+Section: Programming/C
+
+Format: HTML
+Index: /usr/share/doc/libjson-glib-doc/json-glib-1.0/index.html
+Files: /usr/share/doc/libjson-glib-doc/json-glib-1.0/*.html

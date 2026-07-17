@@ -11,7 +11,11 @@ override_dh_auto_configure:
 	dh_auto_configure -- \
 		--libexecdir=/usr/lib/$(DEB_HOST_MULTIARCH) \
 		-Dauto_features=enabled \
-		-Dman=true
+		-Dconformance=true \
+		-Dinstalled_tests=true \
+		-Dman=true \
+		-Ddocumentation=$(if $(filter libjson-glib-doc,$(shell dh_listpackages)),enabled,disabled) \
+		$(NULL)
 
 override_dh_gnome_clean:
 	dh_gnome_clean --no-control

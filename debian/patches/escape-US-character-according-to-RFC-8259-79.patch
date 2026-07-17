@@ -1,0 +1,38 @@
+From: =?utf-8?q?Albrecht_Dre=C3=9F?= <albrecht.dress@posteo.de>
+Date: Tue, 4 Mar 2025 17:49:45 +0000
+Subject: =?utf-8?q?escape_=E2=80=9CUS=E2=80=9D_character_according_to_RFC_8?=
+ =?utf-8?q?259_=28=2379=29?=
+
+(cherry picked from commit ea1ffcfd66ca059ad07c14a8bf8b6d9dc6e0165a)
+
+Origin: upstream, after 1.10.6
+---
+ json-glib/json-generator.c  | 2 +-
+ json-glib/tests/generator.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/json-glib/json-generator.c b/json-glib/json-generator.c
+index 315fdaa..bfd5aef 100644
+--- a/json-glib/json-generator.c
++++ b/json-glib/json-generator.c
+@@ -95,7 +95,7 @@ json_strescape (GString     *output,
+           g_string_append_c (output, '\\');
+           g_string_append_c (output, *p);
+         }
+-      else if ((*p > 0 && *p < 0x1f) || *p == 0x7f)
++      else if ((*p > 0 && *p <= 0x1f) || *p == 0x7f)
+         {
+           switch (*p)
+             {
+diff --git a/json-glib/tests/generator.c b/json-glib/tests/generator.c
+index 839632c..0f2b0a5 100644
+--- a/json-glib/tests/generator.c
++++ b/json-glib/tests/generator.c
+@@ -430,6 +430,7 @@ static const FixtureString string_fixtures[] = {
+   { "a\nxc", "\"a\\nxc\"" },
+   { "a\\xc", "\"a\\\\xc\"" },
+   { "Barney B\303\244r", "\"Barney B\303\244r\"" },
++  { "a\x01\x1f\x20z", "\"a\\u0001\\u001f z\"" },
+ };
+ 
+ static void

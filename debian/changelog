@@ -1,3 +1,54 @@
+json-glib (1.10.6+ds-2) unstable; urgency=medium
+
+  * Cherry-pick patch to fix escape of the US control character
+    (Closes: #1100715)
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Mon, 17 Mar 2025 14:31:22 -0400
+
+json-glib (1.10.6+ds-1) unstable; urgency=medium
+
+  * New upstream release
+  * Add debian/salsa-ci.yml
+  * Remove all patches: applied in new release
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Tue, 10 Dec 2024 09:55:38 -0500
+
+json-glib (1.10.0+ds-3) unstable; urgency=medium
+
+  [ Helmut Grohne ]
+  * Improve cross building (Closes: #1087294):
+    - Skip documentation in arch-only build
+    - Demote documentation dependencies to B-D-I
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Tue, 12 Nov 2024 09:20:44 -0500
+
+json-glib (1.10.0+ds-2) unstable; urgency=medium
+
+  * Team upload
+  * d/p/Restore-single-quote-string-extension.patch,
+    d/p/tests-Add-unit-for-JsonParser-extensions.patch:
+    Add patches from upstream to restore parsing of single-quoted strings.
+    These are a non-standard extension, therefore are only accepted in the
+    default non-strict mode, similar to the support for C-style comments.
+    (Closes: #1081803)
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 18 Sep 2024 16:54:26 +0100
+
+json-glib (1.10.0+ds-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+    - d/watch, d/copyright: Repack without generated documentation
+  * d/control: Update dependencies
+  * d/copyright: Update
+  * d/rules: Update build options
+  * Update symbols file
+  * Standards-Version: 4.7.0 (no changes required)
+  * Set up documentation to appear in devhelp and doc-base
+  * d/control, d/tests/build: Use pkgconf in preference to pkg-config
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 03 Sep 2024 15:46:20 +0100
+
 json-glib (1.8.0-2) unstable; urgency=medium
 
   * Team upload
