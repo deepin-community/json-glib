@@ -1,3 +1,9 @@
+json-glib (1.10.6+ds-2deepin1) unstable; urgency=medium
+
+  * Rebuild with LTO enabled (dpkg vendor feature optimize/lto).
+
+ -- tunaichao <tunaichao@uniontech.com>  Mon, 21 Sep 2026 15:01:38 +0800
+
 json-glib (1.10.6+ds-2) unstable; urgency=medium
 
   * Cherry-pick patch to fix escape of the US control character
